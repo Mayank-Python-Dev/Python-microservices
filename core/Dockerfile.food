@@ -1,0 +1,18 @@
+# 1. Use the official Python base image
+FROM python:3.11-slim
+
+# 2. Set the working directory inside the container
+WORKDIR /core/food-service
+
+# 3. Copy only the files needed into the image
+COPY food-service/main.py /core/food-service
+COPY requirements.txt /core/food-service
+
+# 4. Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Expose the port FastAPI will run on
+EXPOSE 8000
+
+# 6. Define the default command to run your app with uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
